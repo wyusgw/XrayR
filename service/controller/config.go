@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/wyx2685/XrayR/common/limiter"
-	"github.com/wyx2685/XrayR/common/mylego"
+	"github.com/StarNGK/XrayR/common/limiter"
+	"github.com/StarNGK/XrayR/common/mylego"
 )
 
 type Config struct {
