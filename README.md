@@ -72,7 +72,7 @@ A Xray backend framework that can easily support many panels.
 ### 一键安装
 
 ```
-wget -N https://raw.githubusercontent.com/wyx2685/XrayR-release/master/install.sh && bash install.sh
+wget -N https://raw.githubusercontent.com/StarNGK/XrayR-release/master/install.sh && bash install.sh
 ```
 
 ### 使用Docker部署软件
