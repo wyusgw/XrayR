@@ -446,8 +446,14 @@ func (c *APIClient) parseV2rayNodeResponse(s *serverConfig) (*api.NodeInfo, erro
 		enableTLS     bool
 		enableREALITY bool
 	)
+	var dest string
+	if s.TlsSettings.Dest != "" {
+		dest = s.TlsSettings.Dest
+	} else {
+		dest = s.TlsSettings.Sni
+	}	
 	realityconfig := api.REALITYConfig{
-		Dest:        s.TlsSettings.Sni + ":" + s.TlsSettings.ServerPort,
+		Dest:        dest + ":" + s.TlsSettings.ServerPort,
 		ServerNames: []string{s.TlsSettings.Sni},
 		PrivateKey:  s.TlsSettings.PrivateKey,
 		ShortIds:    []string{s.TlsSettings.ShortId},
