@@ -99,7 +99,7 @@ func readLocalRuleList(path string) (LocalRuleList []api.DetectRule) {
 			log.Printf("Error when opening file: %s", err)
 			return LocalRuleList
 		}
-
+		defer file.Close()
 		fileScanner := bufio.NewScanner(file)
 
 		// read line by line
@@ -333,7 +333,7 @@ func (c *APIClient) ReportNodeOnlineUsers(onlineUserList *[]api.OnlineUser) erro
 	data := make(map[int][]string)
 	for _, onlineuser := range *onlineUserList {
 		// json structure: { UID1:["ip1","ip2"],UID2:["ip3","ip4"] }
-		data[onlineuser.UID] = append(data[onlineuser.UID], fmt.Sprintf("%s_%d", onlineuser.IP, c.NodeID))
+		data[onlineuser.UID] = append(data[onlineuser.UID], onlineuser.IP)
 		if _, ok := reportOnline[onlineuser.UID]; ok {
 			reportOnline[onlineuser.UID]++
 		} else {
@@ -452,10 +452,11 @@ func (c *APIClient) parseV2rayNodeResponse(s *serverConfig) (*api.NodeInfo, erro
 		dest = s.TlsSettings.Sni
 	}	
 	realityconfig := api.REALITYConfig{
-		Dest:        dest + ":" + s.TlsSettings.ServerPort,
-		ServerNames: []string{s.TlsSettings.Sni},
-		PrivateKey:  s.TlsSettings.PrivateKey,
-		ShortIds:    []string{s.TlsSettings.ShortId},
+		Dest:             dest + ":" + s.TlsSettings.ServerPort,
+		ProxyProtocolVer: s.TlsSettings.Xver,
+		ServerNames:      []string{s.TlsSettings.Sni},
+		PrivateKey:       s.TlsSettings.PrivateKey,
+		ShortIds:         []string{s.TlsSettings.ShortId},
 	}
 	switch s.Network {
 	case "ws":
