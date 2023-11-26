@@ -3,7 +3,7 @@
     "tag": "IPv4_out",
     "protocol": "freedom",
     "settings": {
-      "domainStrategy": "UseIPv4"
+      "domainStrategy": "UseIPv4v6"
     }
   },
   {
