@@ -2,17 +2,12 @@
 https://github.com/wyx2685/v2board
 
 # XrayR
-
-[![](https://img.shields.io/badge/TgChat-@XrayR讨论-blue.svg)](https://t.me/XrayR_project)
-[![](https://img.shields.io/badge/Channel-@XrayR通知-blue.svg)](https://t.me/XrayR_channel)
-![](https://img.shields.io/github/stars/wyx2685/XrayR)
-![](https://img.shields.io/github/forks/wyx2685/XrayR)
-![](https://github.com/wyx2685/XrayR/actions/workflows/release.yml/badge.svg)
-![](https://github.com/wyx2685/XrayR/actions/workflows/docker.yml/badge.svg)
-[![Github All Releases](https://img.shields.io/github/downloads/wyx2685/XrayR/total.svg)]()
+![](https://github.com/StarNGK/XrayR/actions/workflows/release.yml/badge.svg)
+![](https://github.com/StarNGK/XrayR/actions/workflows/docker.yml/badge.svg)
+[![Github All Releases](https://img.shields.io/github/downloads/StarNGK/XrayR/total.svg)]()
 
 
-[English](https://github.com/wyx2685/XrayR/blob/master/README-en.md)|[Iranian](https://github.com/wyx2685/XrayR/blob/master/README_Fa.md)|[Vietnamese](https://github.com/wyx2685/XrayR/blob/master/README-vi.md)
+[English](https://github.com/StarNGK/XrayR/blob/master/README-en.md)|[Iranian](https://github.com/StarNGK/XrayR/blob/master/README_Fa.md)|[Vietnamese](https://github.com/StarNGK/XrayR/blob/master/README-vi.md)
 
 A Xray backend framework that can easily support many panels.
 
@@ -96,7 +91,7 @@ wget -N https://raw.githubusercontent.com/StarNGK/XrayR-release/master/install.s
 
 ## Licence
 
-[Mozilla Public License Version 2.0](https://github.com/wyx2685/XrayR/blob/master/LICENSE)
+[Mozilla Public License Version 2.0](https://github.com/StarNGK/XrayR/blob/master/LICENSE)
 
 ## Telgram
 
@@ -106,6 +101,6 @@ wget -N https://raw.githubusercontent.com/StarNGK/XrayR-release/master/install.s
 
 ## Stargazers over time
 
-[![Stargazers over time](https://starchart.cc/wyx2685/XrayR.svg)](https://starchart.cc/wyx2685/XrayR)
+[![Stargazers over time](https://starchart.cc/StarNGK/XrayR.svg)](https://starchart.cc/StarNGK/XrayR)
 
 
