@@ -93,11 +93,6 @@ wget -N https://raw.githubusercontent.com/StarNGK/XrayR-release/master/install.s
 
 [Mozilla Public License Version 2.0](https://github.com/StarNGK/XrayR/blob/master/LICENSE)
 
-## Telgram
-
-[XrayR后端讨论](https://t.me/XrayR_project)
-
-[XrayR通知](https://t.me/XrayR_channel)
 
 ## Stargazers over time
 
