@@ -16,13 +16,13 @@ require (
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/r3labs/diff/v2 v2.15.1
 	github.com/redis/go-redis/v9 v9.3.0
-	github.com/sagernet/sing v0.2.17
-	github.com/sagernet/sing-shadowsocks v0.2.5
+	github.com/sagernet/sing v0.2.18
+	github.com/sagernet/sing-shadowsocks v0.2.6
 	github.com/shirou/gopsutil/v3 v3.23.10
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.17.0
 	github.com/stretchr/testify v1.8.4
-	github.com/xtls/xray-core v1.8.7-0.20231128163007-be21b1194b04
+	github.com/xtls/xray-core v1.8.7-0.20231211200735-2c97beae4e0a
 	golang.org/x/crypto v0.16.0
 	golang.org/x/net v0.19.0
 	golang.org/x/time v0.4.0
