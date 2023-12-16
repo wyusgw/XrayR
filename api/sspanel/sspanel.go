@@ -142,7 +142,7 @@ func (c *APIClient) parseResponse(res *resty.Response, path string, err error) (
 
 	if res.StatusCode() > 400 {
 		body := res.Body()
-		return nil, fmt.Errorf("request %s failed: %s, %s", c.assembleURL(path), string(body), err)
+		return nil, fmt.Errorf("request %s failed: %s, %v", c.assembleURL(path), string(body), err)
 	}
 	response := res.Result().(*Response)
 
@@ -519,6 +519,11 @@ func (c *APIClient) ParseSSNodeResponse(nodeInfoResponse *NodeInfoResponse) (*ap
 		return nil, fmt.Errorf("unmarshal %s failed: %s", reflect.TypeOf(userListResponse), err)
 	}
 
+	// init server port
+	if len(*userListResponse) != 0 {
+		port = (*userListResponse)[0].Port
+	}
+
 	if c.SpeedLimit > 0 {
 		speedLimit = uint64((c.SpeedLimit * 1000000) / 8)
 	} else {
@@ -733,10 +738,10 @@ func (c *APIClient) ParseUserListResponse(userInfoResponse *[]UserResponse) (*[]
 // Only available for SSPanel version >= 2021.11
 func (c *APIClient) ParseSSPanelNodeInfo(nodeInfoResponse *NodeInfoResponse) (*api.NodeInfo, error) {
 	var (
-		speedLimit                 uint64 = 0
-		enableTLS, enableVless     bool
-		alterID                    uint16 = 0
-		tlsType, transportProtocol string
+		speedLimit             uint64 = 0
+		enableTLS, enableVless bool
+		alterID                uint16 = 0
+		transportProtocol      string
 	)
 
 	// Check if custom_config is null
@@ -768,8 +773,8 @@ func (c *APIClient) ParseSSPanelNodeInfo(nodeInfoResponse *NodeInfoResponse) (*a
 		transportProtocol = "tcp"
 	case "V2ray":
 		transportProtocol = nodeConfig.Network
-		tlsType = nodeConfig.Security
 
+		tlsType := nodeConfig.Security
 		if tlsType == "tls" || tlsType == "xtls" {
 			enableTLS = true
 		}
@@ -779,12 +784,7 @@ func (c *APIClient) ParseSSPanelNodeInfo(nodeInfoResponse *NodeInfoResponse) (*a
 		}
 	case "Trojan":
 		enableTLS = true
-		tlsType = "tls"
 		transportProtocol = "tcp"
-
-		if nodeConfig.Security != "" {
-			tlsType = nodeConfig.Security // try to read security from config
-		}
 
 		// Select transport protocol
 		if nodeConfig.Network != "" {
