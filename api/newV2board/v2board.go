@@ -55,6 +55,7 @@ func New(apiConfig *api.Config) *APIClient {
 		}
 	})
 	client.SetBaseURL(apiConfig.APIHost)
+	
 	// Create Key for each requests
 	nodeType_for_requests := func() string {
 		if apiConfig.NodeType == "V2ray" && apiConfig.EnableVless {
@@ -444,8 +445,8 @@ func (c *APIClient) parseV2rayNodeResponse(s *serverConfig) (*api.NodeInfo, erro
 		header        json.RawMessage
 		enableTLS     bool
 		enableREALITY bool
+		dest          string
 	)
-	var dest string
 	if s.TlsSettings.Dest != "" {
 		dest = s.TlsSettings.Dest
 	} else {
