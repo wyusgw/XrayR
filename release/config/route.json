@@ -17,9 +17,9 @@
     },
     {
       "domain": [
-        "geosite:cn"
+        "geosite:google"
       ],
-      "outboundTag": "block",
+      "outboundTag": "IPv4_out",
       "type": "field"
     },
     {
