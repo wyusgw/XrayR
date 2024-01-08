@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 	"strconv"
@@ -13,12 +12,14 @@ import (
 	"sync/atomic"
 	"time"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/bitly/go-simplejson"
 	"github.com/go-resty/resty/v2"
 	"github.com/xtls/xray-core/common/net"
 	"github.com/xtls/xray-core/infra/conf"
 
-	"github.com/StarNGK/XrayR/api"
+	"github.com/wyx2685/XrayR/api"
 )
 
 // APIClient create an api client to the panel.
@@ -55,7 +56,7 @@ func New(apiConfig *api.Config) *APIClient {
 		}
 	})
 	client.SetBaseURL(apiConfig.APIHost)
-	
+
 	// Create Key for each requests
 	nodeType_for_requests := func() string {
 		if apiConfig.NodeType == "V2ray" && apiConfig.EnableVless {
@@ -451,7 +452,7 @@ func (c *APIClient) parseV2rayNodeResponse(s *serverConfig) (*api.NodeInfo, erro
 		dest = s.TlsSettings.Dest
 	} else {
 		dest = s.TlsSettings.Sni
-	}	
+	}
 	realityconfig := api.REALITYConfig{
 		Dest:             dest + ":" + s.TlsSettings.ServerPort,
 		ProxyProtocolVer: s.TlsSettings.Xver,
@@ -511,10 +512,10 @@ func (c *APIClient) parseV2rayNodeResponse(s *serverConfig) (*api.NodeInfo, erro
 		Host:              host,
 		EnableVless:       c.EnableVless,
 		VlessFlow:         s.VlessFlow,
-		REALITYConfig:     &realityconfig,
-		EnableREALITY:     enableREALITY,
 		ServiceName:       s.NetworkSettings.ServiceName,
 		Header:            header,
+		EnableREALITY:     enableREALITY,
+		REALITYConfig:     &realityconfig,
 		NameServerConfig:  s.parseDNSConfig(),
 	}, nil
 }

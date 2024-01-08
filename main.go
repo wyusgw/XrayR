@@ -1,9 +1,8 @@
 package main
 
 import (
-	"log"
-
-	"github.com/StarNGK/XrayR/cmd"
+	log "github.com/sirupsen/logrus"
+	"github.com/wyx2685/XrayR/cmd"
 )
 
 func main() {

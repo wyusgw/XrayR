@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 	"strconv"
@@ -14,12 +13,14 @@ import (
 	"time"
 
 	"github.com/bitly/go-simplejson"
+	log "github.com/sirupsen/logrus"
+
 	"github.com/go-resty/resty/v2"
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/xtls/xray-core/common/net"
 	"github.com/xtls/xray-core/infra/conf"
 
-	"github.com/StarNGK/XrayR/api"
+	"github.com/wyx2685/XrayR/api"
 )
 
 // APIClient create an api client to the panel.

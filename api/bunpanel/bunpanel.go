@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
+	"github.com/go-resty/resty/v2"
+	log "github.com/sirupsen/logrus"
+	"github.com/wyx2685/XrayR/api"
 	"os"
 	"reflect"
 	"regexp"
@@ -13,10 +15,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/go-resty/resty/v2"
-
-	"github.com/StarNGK/XrayR/api"
 )
 
 type APIClient struct {
@@ -294,7 +292,7 @@ func (c *APIClient) ParseUserListResponse(userInfoResponse *[]User) (*[]api.User
 		c.access.Unlock()
 	}()
 
-	var deviceLimit, localDeviceLimit int = 0, 0
+	var deviceLimit, localDeviceLimit = 0, 0
 	var speedLimit uint64 = 0
 	var userList []api.UserInfo
 	for _, user := range *userInfoResponse {
