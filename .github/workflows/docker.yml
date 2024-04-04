@@ -8,15 +8,13 @@ on:
       - "**/*.go"
       - "go.mod"
       - "go.sum"
-      - ".github/workflows/*.yml"
+      - ".github/workflows/docker.yml"
     tags:
       - 'v*'
-  pull_request:
-    branches:
-      - 'master'
+
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: xrayr-project/xrayr
+  IMAGE_NAME: wyx2685/xrayr
 
 jobs:
   build:
@@ -102,4 +100,4 @@ jobs:
             $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env. }}:${{ steps.meta.outputs.version }}
