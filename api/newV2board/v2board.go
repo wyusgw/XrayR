@@ -279,8 +279,9 @@ func (c *APIClient) GetUserAlive() (map[int]int, error) {
 	r, err := c.client.R().
 		ForceContentType("application/json").
 		Get(path)
-	if err != nil {
-		return make(map[int]int), nil
+	if err != nil || r.StatusCode() > 399 {
+		c.AliveMap.Alive = make(map[int]int)
+		return nil, nil
 	}
 
 	if r != nil {
@@ -288,7 +289,7 @@ func (c *APIClient) GetUserAlive() (map[int]int, error) {
 	} else {
 		return nil, fmt.Errorf("received nil response")
 	}
-
+	c.AliveMap = &AliveMap{}
 	if err := json.Unmarshal(r.Body(), c.AliveMap); err != nil {
 		return nil, fmt.Errorf("unmarshal user alive list error: %s", err)
 	}

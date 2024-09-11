@@ -58,7 +58,7 @@ func InboundBuilder(config *Config, nodeInfo *api.NodeInfo, tag string) (*core.I
 	// Build Protocol and Protocol setting
 	switch nodeInfo.NodeType {
 	case "V2ray", "Vmess", "Vless":
-		if nodeInfo.EnableVless || (nodeInfo.NodeType == "Vless" && nodeInfo.NodeType != "Vmess") {
+		if (nodeInfo.NodeType == "V2ray" && nodeInfo.EnableVless) || nodeInfo.NodeType == "Vless" {
 			protocol = "vless"
 			// Enable fallback
 			if config.EnableFallback {
@@ -184,13 +184,6 @@ func InboundBuilder(config *Config, nodeInfo *api.NodeInfo, tag string) (*core.I
 			Authority:   nodeInfo.Authority,
 		}
 		streamSetting.GRPCConfig = grpcSettings
-	case "quic":
-		quicSettings := &conf.QUICConfig{
-			Header:   nodeInfo.Header,
-			Security: nodeInfo.Security,
-			Key:      nodeInfo.Key,
-		}
-		streamSetting.QUICSettings = quicSettings
 	case "httpupgrade":
 		httpupgradeSettings := &conf.HttpUpgradeConfig{
 			Headers:             nodeInfo.Headers,
