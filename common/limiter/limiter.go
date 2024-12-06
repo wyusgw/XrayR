@@ -37,8 +37,8 @@ type InboundInfo struct {
 		config         *GlobalDeviceLimitConfig
 		globalOnlineIP *marshaler.Marshaler
 	}
-	AliveList     map[int]int    // Key: Uid, value: alive_ip
-	OldUserOnline map[string]int // Key: Ip, value: Uid
+	AliveList     map[int]int // Key: Uid, value: alive_ip
+	OldUserOnline *sync.Map   // Key: Ip, value: Uid
 }
 
 type Limiter struct {
@@ -57,7 +57,7 @@ func (l *Limiter) AddInboundLimiter(tag string, nodeSpeedLimit uint64, userList 
 		NodeSpeedLimit: nodeSpeedLimit,
 		BucketHub:      new(sync.Map),
 		UserOnlineIP:   new(sync.Map),
-		OldUserOnline:  make(map[string]int),
+		OldUserOnline:  new(sync.Map),
 	}
 
 	if globalLimit != nil && globalLimit.Enable {
@@ -150,7 +150,7 @@ func (l *Limiter) GetOnlineDevice(tag string) (*[]api.OnlineUser, error) {
 			ipMap.Range(func(key, value interface{}) bool {
 				uid := value.(int)
 				ip := key.(string)
-				inboundInfo.OldUserOnline[ip] = uid
+				inboundInfo.OldUserOnline.Store(ip, uid)
 				onlineUser = append(onlineUser, api.OnlineUser{UID: uid, IP: ip})
 				return true
 			})
@@ -198,8 +198,10 @@ func (l *Limiter) GetUserBucket(tag string, email string, ip string, isSourceTCP
 						}
 					}
 				}
-			} else if inboundInfo.OldUserOnline[ip] == uid {
-				delete(inboundInfo.OldUserOnline, ip)
+			} else if v, ok := inboundInfo.OldUserOnline.Load(ip); ok {
+				if v.(int) == uid {
+					inboundInfo.OldUserOnline.Delete(ip)
+				}
 			} else {
 				if deviceLimit > 0 {
 					if deviceLimit <= aliveIp {
