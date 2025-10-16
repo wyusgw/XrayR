@@ -25,21 +25,16 @@ jobs:
   build:
     strategy:
       matrix:
-        # Include amd64 on all platforms.
         goos: [ windows, freebsd, openbsd, linux, darwin ]
         goarch: [ amd64, 386 ]
         exclude:
-          # Exclude i386 on darwin.
           - goarch: 386
             goos: darwin
           - goarch: 386
             goos: openbsd
         include:
-          # BEIGIN MacOS ARM64
           - goos: darwin
             goarch: arm64
-          # END MacOS ARM64
-          # BEGIN Linux ARM 5 6 7
           - goos: linux
             goarch: arm
             goarm: 7
@@ -49,19 +44,12 @@ jobs:
           - goos: linux
             goarch: arm
             goarm: 5
-          # END Linux ARM 5 6 7
-          # BEGIN Android ARM 8
           - goos: android
             goarch: arm64
-          # END Android ARM 8
-          # BEGIN Other architectures
-          # BEGIN riscv64 & ARM64
           - goos: linux
             goarch: arm64
           - goos: linux
             goarch: riscv64
-          # END riscv64 & ARM64
-          # BEGIN MIPS
           - goos: linux
             goarch: mips64
           - goos: linux
@@ -70,25 +58,15 @@ jobs:
             goarch: mipsle
           - goos: linux
             goarch: mips
-          # END MIPS
-          # BEGIN PPC
-          # - goos: linux # Removed due to the unsupport of shirou/gopsutil 
-          #   goarch: ppc64
           - goos: linux
             goarch: ppc64le
-          # END PPC
-          # BEGIN FreeBSD ARM
           - goos: freebsd
             goarch: arm64
           - goos: freebsd
             goarch: arm
             goarm: 7
-          # END FreeBSD ARM
-          # BEGIN S390X
           - goos: linux
             goarch: s390x
-          # END S390X
-          # END Other architectures
       fail-fast: false
 
     runs-on: ubuntu-latest
@@ -100,6 +78,7 @@ jobs:
     steps:
       - name: Checkout codebase
         uses: actions/checkout@v3
+
       - name: Show workflow information
         id: get_filename
         run: |
@@ -116,7 +95,6 @@ jobs:
       - name: Get project dependencies
         run: go mod download
 
-
       - name: Build XrayR
         run: |
           mkdir -p build_assets
@@ -126,6 +104,7 @@ jobs:
         if: matrix.goarch == 'mips' || matrix.goarch == 'mipsle'
         run: |
           GOMIPS=softfloat go build -v -o build_assets/XrayR_softfloat -trimpath -ldflags "-s -w -buildid="
+
       - name: Rename Windows XrayR
         if: matrix.goos == 'windows'
         run: |
@@ -155,6 +134,7 @@ jobs:
               echo -e "Downloading ${DOWNLOAD_URL}..."
               curl -L "${DOWNLOAD_URL}" -o ./build_assets/${FILE_NAME}
             done
+
       - name: Create ZIP archive
         shell: bash
         run: |
@@ -168,20 +148,15 @@ jobs:
           do
             openssl dgst -$METHOD $FILE | sed 's/([^)]*)//g' >>$DGST
           done
+
       - name: Change the name
         run: |
           mv build_assets XrayR-$ASSET_NAME
+
       - name: Upload files to Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: XrayR-${{ steps.get_filename.outputs.ASSET_NAME }}
+          name: XrayR-${{ steps.get_filename.outputs.ASSET_NAME }}-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.goarm }}
           path: |
             ./XrayR-${{ steps.get_filename.outputs.ASSET_NAME }}/*
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
-        if: github.event_name == 'release'
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./XrayR-${{ steps.get_filename.outputs.ASSET_NAME }}.zip*
-          tag: ${{ github.ref }}
-          file_glob: true
+          # include-hidden-files: true
