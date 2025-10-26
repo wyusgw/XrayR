@@ -1,5 +1,5 @@
 ## 本分支需要配合修改过的V2board面板进行使用
-https://github.com/wyx2685/v2board
+[![](https://img.shields.io/badge/XiaoBoard-wyx2685-blue.svg)](https://github.com/wyx2685/v2board)
 
 # XrayR
 [![](https://img.shields.io/badge/TgChat-@UnOfficialV2board讨论-blue.svg)](https://t.me/unofficialV2board)
