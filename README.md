@@ -1,4 +1,4 @@
-## 本分支需要配合修改过的V2board面板进行使用
+## 本分支需要配合修改过的V2board面板进行使用(此仓库会永久保留)
 https://github.com/wyx2685/v2board
 
 # XrayR
@@ -101,9 +101,5 @@ wget -N https://raw.githubusercontent.com/wyusgw/XrayR-release/refs/heads/main/i
 [XrayR后端讨论](https://t.me/XrayR_project)
 
 [XrayR通知](https://t.me/XrayR_channel)
-
-## Stargazers over time
-
-[![Stargazers over time](https://starchart.cc/wyx2685/XrayR.svg)](https://starchart.cc/wyx2685/XrayR)
 
 
